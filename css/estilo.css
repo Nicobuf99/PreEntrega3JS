@@ -1,26 +1,81 @@
 body {
     padding: 0;
     margin: 0;
-    background-color: grey;
+    background-image: linear-gradient(to right, black, rgb(54, 51, 51), grey);
 }
 
-header{
-    margin-bottom: 10px;
+.strong-nav {
+    font-family: 'Bebas Neue', cursive;
+    color: white;
+    font-weight: 400;
+    transition: ease-in 0.7s;
 }
 
 .nav-link {
-    color: black;
+    color: white;
     font-size: small;
     font-weight: 600;
 }
 
-.card-productos {
-    border: 2px solid black;
+.ul-nav li a {
+    font-family: 'Phudu';
+    color: white;
+    transition: ease-in-out 0.7s;
 }
 
-.card-productos img {
+.ul-nav li a:focus {
+    font-family: 'Phudu';
+    color: white;
+}
+
+
+.ul-nav li a:hover , 
+.strong-nav:hover{
+    color: white;
+    transform: scale(1.1);
+}
+
+.strong-nav::first-letter {
+    font-size: x-large;
+}
+
+.borrarDelIndex{
+    display: none;
+}
+
+
+.imagen-titulo{
+    height: 500px;
+    width: 100%;
+    margin-top: 0px;
+    background-image: url(https://agoranors.com/wp-content/uploads/2022/10/Sem-nome-30-%C3%97-15-in-11.png);
+    background-repeat: repeat-y;
+    background-size: cover;
+}
+
+.h1-productos {
+    font-family: 'Bebas Neue', cursive;
+    text-align: center;
+    color: white;
+    margin-top: 20px;
+}
+
+.card {
+    border: 2px solid black;
+    border-radius: 0%;
+    transition: ease-in-out 0.8s;
+}
+
+.card:hover {
+    transform: scaleY(1.02);
+    box-shadow: 2px 10px 10px 0;
+}
+
+.card img {
     height: 18rem;
+    padding-bottom: 5px;
     margin-bottom: 10px;
+    border-bottom: 1px solid grey;
 }
 
 .nombre-del-producto {
@@ -33,22 +88,62 @@ header{
     text-align: center;
 }
 
+.p-pago{
+    display: none;
+}
+
+.esconder-precio {
+    visibility: hidden;
+}
+
+.modal-carrito {
+    border-radius: 0%;
+}
+
+.icon-carrito {
+    color: rgb(194, 15, 15);
+}
+
+.eliminar-producto {
+    border: 1px solid rgb(194, 15, 15);
+}
+
+.boton-seguircomprando {
+    font-weight: 500;
+    border: 1px solid black;
+    border-radius: 0%;
+    background-color: grey;
+    transition: ease-in 1s;
+}
+
+.boton-seguircomprando:hover{
+    font-weight: 500;
+    border: 1px solid black;
+    border-radius: 0%;
+    background-color: rgb(97, 96, 96);
+}
+
 .agregar-carrito, .boton-irapagar {
     border: 1px solid black;
     color: white;
     background-color: green;
     transition: all 0.7s;
-
+    border-radius: 0%;
 }
 
 .agregar-carrito {
     margin-left: 55%;
+    border-radius: 0%;
 }
 
 .agregar-carrito:hover , .boton-irapagar:hover {
     background-color: green;
     transform: scale(1.05);
     border: 1px solid black;
+}
+
+.h1-pago {
+    color: white;
 }
 
 .form-pago {
@@ -65,11 +160,51 @@ header{
     transform: scale(1.1);
 }
 
+.form-pago input{
+    border: 1px solid black
+}
+
+input:hover {
+    border: 1px solid black;
+}
+
+input:invalid {
+    border: 1px solid red;
+}
+
+
+.div-form{
+    color: red;
+}
+
+.precio-formulario {
+    color: white;
+}
+
+#botonSubmit {
+    color: white;
+    background-color: rgb(8, 105, 8);
+    transition: all 0.6s;
+}
+
+#botonSubmit:hover {
+    transform: scale(1.1);
+}
+
+.boton-volverindex{
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
 footer p {
+    font-family: 'Phudu', cursive;
     margin-top: 30px;
     text-align: center;
     font-weight: 600;
     font-size: large;
+    color: white;
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
 footer ul {
@@ -85,3 +220,4 @@ footer ul li a i {
 footer ul li a i:hover {
     transform: scale(1.5);
 }
+

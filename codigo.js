@@ -5,81 +5,75 @@ const contadorCarrito = document.getElementById("contador-carrito");
 const contenidoCarrito = document.getElementById("contenido-carrito");
 const precioTotalAPagar = document.getElementById("precio-total-productos");
 const irAPagar = document.getElementById("ir-a-pagar");
-const vaciarCarrito = document.getElementById("boton-vaciarcarrito");
-
+const aPago = document.getElementById("aPago");
 
 // Lista de Productos
-
-const listaProductos = [
-    {id: 1, categoria:"Raqueta", modelo: "BABOLAT PURE STRIKE", precio: 80000, imagen: "./imagenes/purestrike.webp"},
-    {id: 2, categoria:"Raqueta", modelo: "BABOLAT PURE DRIVE", precio: 75000, imagen: "./imagenes/puredrive.webp"},
-    {id: 3, categoria:"Raqueta", modelo: "YONEX VCORE", precio: 85000, imagen: "./imagenes/yonexvcore.jpg"},
-    {id: 4, categoria:"Raqueta", modelo: "WILSON PRO STAFF", precio: 95000, imagen: "./imagenes/wilsonprostaff.jpg"},
-    {id: 5, categoria:"Raqueta", modelo: "HEAD RADICAL", precio: 82000, imagen: "./imagenes/headradical.webp"},
-    {id: 6, categoria:"Raqueta", modelo: "WILSON BLADE", precio: 90000, imagen: "./imagenes/wilsonblade.jpeg"},
-    {id: 7, categoria:"Strings", modelo: "KIRSCHBAUM PRO LINE II", precio: 20000, imagen: "./imagenes/kirschbaumprolineII.png"},
-    {id: 8, categoria:"Strings", modelo: "KIRSCHBAUM SUPER SMASH", precio: 17000, imagen: "./imagenes/kirschbaumsupersmash.jpg"},
-    {id: 9, categoria:"Strings", modelo: "BABOLAT RPM BLAST", precio: 25000, imagen: "./imagenes/babolatrpmblast.jpg"},
-    {id: 10, categoria:"Cubregrips", modelo: "WILSON PRO OVERGRIP", precio: 30000, imagen: "./imagenes/wilsonproovergrip.jpg"},
-    {id: 11, categoria:"Cubregrips", modelo: "TOURNA PRO",precio: 22000, imagen: "./imagenes/tournapro.webp"},
-    {id: 12, categoria:"Cubregrips", modelo: "BABOLAT PRO TOUR OVERGRIP", precio: 25000, imagen: "./imagenes/babolatprotour.webp"}
-  ]
+const listaProductos = [];
 
 // Con una constante defino que si el producto fue traido del LS me lo parsee y si no lo ingrese en un array
-
 const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
 //La clase producto me servira para luego ver los productos en el carrito de compras
-
 class Producto {
-  constructor(modelo, precio, imagen) {
+  constructor(modelo, precio, imagen, categoria) {
       this.modelo  = modelo.toUpperCase();
       this.precio  = parseFloat(precio);
       this.imagen = imagen;
+      this.categoria = categoria;
   }
-}
+};
 
-//Con DOM creo el elemento que contiene al producto tomando el array de objetos
+const traerProductos = async () => {
+  try{
+    const response = await fetch('/productos.json')
+    const data = await response.json()
+    listaProductos.push(...data)
+    crearProductos();
+    filtrarProductos();
+  } catch (errores) {
+    console.log (errores);
+  }
+};
+traerProductos();
 
-for (const producto of listaProductos) {
+// For of que arma cada div segun producto que encuentre
+const crearProductos = ()=>{
+  for (const producto of listaProductos) {
     let contenedor = document.createElement("div");
     mainHtml.classList.add("row", "row-cols-1", "row-cols-sm-2" , "row-cols-lg-3");
-    contenedor.classList.add("col","px-5")
-    contenedor.innerHTML = `<div class="card mt-3 mb-3 card-productos">
+    contenedor.classList.add("col","px-5", "card-productos", `${producto.categoria}`)
+    contenedor.innerHTML = `<div class="card mt-3 mb-3">
                                     <div class="card-body">
-                                    <img src=${producto.imagen} class="card-img-top" alt=${producto.modelo} />
+                                    <img src=${producto.imagen} class="card-img-top imagen-productos" alt=${producto.modelo} />
                                     <h3 class="card-title nombre-del-producto"> ${producto.modelo} </h3>
                                     <p class="card-text precio-del-producto"> $ ${producto.precio} </p>
                                     <button type="button" class="btn btn-primary agregar-carrito">Agregar al carrito</button>
                                 </div>
                             </div>`
     mainHtml.appendChild(contenedor);
+  }
+  // Boton que al seleccionarlo me arma el DOM del carrito
+  const botonCarrito = document.querySelectorAll(".agregar-carrito")
+
+  botonCarrito.forEach(btn => {
+      let parent = btn.parentElement;
+      let nombreProducto = parent.querySelector("h3").textContent;
+      let precioProducto = parseFloat(parent.querySelector("p").textContent.replace("$",""));
+      let imagenProducto = parent.querySelector("img").src;
+
+      const productoNuevo = new Producto(nombreProducto,precioProducto,imagenProducto);
+
+      btn.addEventListener('click', () => {
+        alerta();
+        carrito.push(productoNuevo);
+        localStorage.setItem("carrito",JSON.stringify(carrito));
+        actualizarContador();
+        mostrarCarrito();
+      })
+  });
 }
 
-//A traves del boton creado de agregar al carrito armo un bucle que recorra todos los botones para que me seleccione el producto
-// que deseo agregar al carrito, tomando la informacion desde el LS que es hacia donde envie la informacion
-
-const botonCarrito = document.querySelectorAll(".agregar-carrito")
-
-botonCarrito.forEach(btn => {
-    let parent = btn.parentElement;
-    let nombreProducto = parent.querySelector("h3").textContent;
-    let precioProducto = parseFloat(parent.querySelector("p").textContent.replace("$",""));
-    let imagenProducto = parent.querySelector("img").src;
-
-    const productoNuevo = new Producto(nombreProducto,precioProducto,imagenProducto);
-
-    btn.addEventListener('click', () => {
-      alert("Producto añadido a tu carrito")
-      carrito.push(productoNuevo);
-      localStorage.setItem("carrito",JSON.stringify(carrito));
-      actualizarContador();
-      mostrarCarrito()
-    })
-});
-
-//Con la funcion de actualizar el contador muestro cuantos productos hay en el carrito
-
+//Funcion para mostrar la cantidad de productos en el carrito
 function actualizarContador () {
   contadorCarrito.innerHTML = carrito.length
 };
@@ -90,18 +84,17 @@ actualizarContador();
 function mostrarCarrito () {
   if (carrito.length === 0) {
     contenidoCarrito.innerHTML = `<p> Tu carrito esta vacío </p>`;
-    irAPagar.setAttribute('disabled',true);
-
-
+    aPago.classList.add('p-pago')
   }
   else {
-    irAPagar.removeAttribute('disabled');
+    aPago.classList.remove('p-pago')
 
-    
+    //Armo una funcion para calcular el precio final de los productos ingresados al carrito
     const sumaPrecios = carrito.reduce((acc, el)=>acc + el.precio, 0);
     const precioConIva = sumaPrecios * 1.21;    
-    precioTotalAPagar.innerText = `$${precioConIva} con IVA`;
+    precioTotalAPagar.innerText = `$${precioConIva} FINAL`;
     
+    // Armo con DOM la estructura de los productos mostrados en el carrito
     contenidoCarrito.innerHTML = "";
     carrito.forEach(item => {
       contenidoCarrito.innerHTML += `<div class="row align-items-center">
@@ -109,38 +102,45 @@ function mostrarCarrito () {
                                       <div class="col-9">
                                         <h5> ${item.modelo} </h5>
                                         <p class="precio-producto-carrito"> $ ${item.precio} + IVA </p>
-                                        <button type="button" class="eliminar-producto"><i class="fa-solid fa-trash"></i></button>
+                                        <button type="button" class="eliminar-producto"><i class="fa-solid fa-trash icon-carrito"></i></button>
                                       </div>
                                     </div>`
     });
 
-    const eliminarProducto = document.querySelectorAll(".eliminar-producto")
-
-    for (let i = 0; i < eliminarProducto.length; i++) {
-      eliminarProducto[i].addEventListener("click", function() {
-      this.parentElement.parentElement.remove();
-      carrito.splice(i,1);
-      localStorage.setItem("carrito", JSON.stringify(carrito));
-      actualizarContador();
-      });
+    // Función para eliminar los productos del carrito
+    const botonesEliminarProducto = document.querySelectorAll('.eliminar-producto');
+   
+    botonesEliminarProducto.forEach(boton => {
+    boton.addEventListener('click', () => {
+    carrito.splice(boton, 1);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    actualizarContador();
+    mostrarCarrito();
+    const sumaPrecios = carrito.reduce((acc, el)=>acc + el.precio, 0);
+    const precioConIva = sumaPrecios * 1.21;    
+    precioTotalAPagar.innerText = `$${precioConIva} FINAL`;
+    if (precioConIva == 0) {
+    precioTotalAPagar.classList.add('esconder-precio');
+    }else{
+    precioTotalAPagar.classList.remove('esconder-precio');
     }
+    })
+    });
+   
+  }
+}; mostrarCarrito();
+
+// Funcion que alerta al usuario de que el producto fue agregado exitosamente
+function alerta () {
+  Toastify({
+    text: "Producto añadido exitosamente al carrito!",
+    duration: 1500,
+    gravity: "top",
+    position: "right",
+    style:{
+      background: "#388e3c",
+      color:"white",
     }
-} 
+  }).showToast()
+}
 
-mostrarCarrito();
-
-// Creo una funcion para vaciar el carrito a traves de un evento
-//La funcion borrarCarrito la comento en la entrega porque me falta poder eliminar el dom sin tener que recargar la pagina
-
-/*function borrarCarrito () {
-    localStorage.clear("carrito");
-   }
-
-
-
-vaciarCarrito.addEventListener("click", () => {
-  borrarCarrito();
-  alert("El carrito ha sido borrado exitosamente, recargue la pagina para iniciar su compra denuevo") 
-  })
-
-*/
