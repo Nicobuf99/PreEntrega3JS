@@ -4,83 +4,83 @@
       "categoria": "raqueta",
       "modelo": "BABOLAT PURE STRIKE",
       "precio": 80000,
-      "imagen": "./imagenes/purestrike.webp"
+      "imagen": "../imagenes/purestrike.webp"
     },
     {
       "id": 2,
       "categoria": "raqueta",
       "modelo": "BABOLAT PURE DRIVE",
       "precio": 75000,
-      "imagen": "./imagenes/puredrive.webp"
+      "imagen": "../imagenes/puredrive.webp"
     },
     {
       "id": 3,
       "categoria": "raqueta",
       "modelo": "YONEX VCORE",
       "precio": 85000,
-      "imagen": "./imagenes/yonexvcore.jpg"
+      "imagen": "../imagenes/yonexvcore.jpg"
     },
     {
       "id": 4,
       "categoria": "raqueta",
       "modelo": "WILSON PRO STAFF",
       "precio": 95000,
-      "imagen": "./imagenes/wilsonprostaff.jpg"
+      "imagen": "../imagenes/wilsonprostaff.jpg"
     },
     {
       "id": 5,
       "categoria": "raqueta",
       "modelo": "HEAD RADICAL",
       "precio": 82000,
-      "imagen": "./imagenes/headradical.webp"
+      "imagen": "../imagenes/headradical.webp"
     },
     {
       "id": 6,
       "categoria": "raqueta",
       "modelo": "WILSON BLADE",
       "precio": 90000,
-      "imagen": "./imagenes/wilsonblade.jpeg"
+      "imagen": "../imagenes/wilsonblade.jpeg"
     },
     {
       "id": 7,
       "categoria": "strings",
       "modelo": "KIRSCHBAUM PRO LINE II",
       "precio": 20000,
-      "imagen": "./imagenes/kirschbaumprolineII.png"
+      "imagen": "../imagenes/kirschbaumprolineII.png"
     },
     {
       "id": 8,
       "categoria": "strings",
       "modelo": "KIRSCHBAUM SUPER SMASH",
       "precio": 17000,
-      "imagen": "./imagenes/kirschbaumsupersmash.jpg"
+      "imagen": "../imagenes/kirschbaumsupersmash.jpg"
     },
     {
       "id": 9,
       "categoria": "strings",
       "modelo": "BABOLAT RPM BLAST",
       "precio": 25000,
-      "imagen": "./imagenes/babolatrpmblast.jpg"
+      "imagen": "../imagenes/babolatrpmblast.jpg"
     },
     {
        "id": 10,
        "categoria": "cubregrips",
        "modelo": "WILSON PRO OVERGRIP",
        "precio": 30000,
-       "imagen": "./imagenes/wilsonproovergrip.jpg"
+       "imagen": "../imagenes/wilsonproovergrip.jpg"
       },
     {
       "id": 11,
       "categoria": "cubregrips",
       "modelo": "TOURNA PRO",
       "precio": 22000,
-      "imagen": "./imagenes/tournapro.webp"
+      "imagen": "../imagenes/tournapro.webp"
     },
     {
       "id": 12,
       "categoria": "cubregrips",
       "modelo": "BABOLAT PRO TOUR OVERGRIP",
       "precio": 25000,
-      "imagen": "./imagenes/babolatprotour.webp"
+      "imagen": "../imagenes/babolatprotour.webp"
     }
     ]

@@ -25,7 +25,7 @@ class Producto {
 
 const traerProductos = async () => {
   try{
-    const response = await fetch('/productos.json')
+    const response = await fetch('../jsons/productos.json')
     const data = await response.json()
     listaProductos.push(...data)
     crearProductos();
@@ -116,6 +116,8 @@ function mostrarCarrito () {
     localStorage.setItem("carrito", JSON.stringify(carrito));
     actualizarContador();
     mostrarCarrito();
+
+    //Mostrar el precio a pagar en el carrito
     const sumaPrecios = carrito.reduce((acc, el)=>acc + el.precio, 0);
     const precioConIva = sumaPrecios * 1.21;    
     precioTotalAPagar.innerText = `$${precioConIva} FINAL`;
